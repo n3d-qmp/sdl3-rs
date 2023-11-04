@@ -1,6 +1,6 @@
 use crate::get_error;
-use libc::c_void;
 use libc::c_char;
+use libc::c_void;
 use std::ffi::CString;
 use std::io;
 use std::marker::PhantomData;
@@ -57,8 +57,7 @@ impl<'a> RWops<'a> {
     /// This method can only fail if the buffer size is zero.
     #[doc(alias = "SDL_RWFromConstMem")]
     pub fn from_bytes(buf: &'a [u8]) -> Result<RWops<'a>, String> {
-        let raw =
-            unsafe { sys::SDL_RWFromConstMem(buf.as_ptr() as *const c_void, buf.len()) };
+        let raw = unsafe { sys::SDL_RWFromConstMem(buf.as_ptr() as *const c_void, buf.len()) };
 
         if raw.is_null() {
             Err(get_error())

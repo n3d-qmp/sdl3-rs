@@ -163,7 +163,7 @@ mod test {
         ::std::thread::sleep(Duration::from_millis(250));
         let num = local_num.lock().unwrap(); // read the number back
         assert_eq!(*num, 9); // it should have incremented at least 10 times...
-	sdl_context.sdldrop();
+        sdl_context.sdldrop();
     }
 
     #[test]

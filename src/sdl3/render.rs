@@ -128,10 +128,7 @@ impl FPoint {
 
 impl From<Point> for FPoint {
     fn from(point: Point) -> Self {
-	FPoint::new(
-	    point.x as f32,
-	    point.y as f32,
-	    )
+        FPoint::new(point.x as f32, point.y as f32)
     }
 }
 
@@ -156,31 +153,26 @@ impl FRect {
         }
     }
     pub fn set_x(&mut self, update: f32) {
-	self.x = update;
+        self.x = update;
     }
     pub fn set_y(&mut self, update: f32) {
-	self.y = update;
+        self.y = update;
     }
     pub fn set_w(&mut self, update: f32) {
-	self.w = update;
+        self.w = update;
     }
     pub fn set_h(&mut self, update: f32) {
-	self.h = update;
+        self.h = update;
     }
     pub fn set_xy(&mut self, update: FPoint) {
-	self.x = update.x;
-	self.y = update.y;
+        self.x = update.x;
+        self.y = update.y;
     }
 }
 
 impl From<Rect> for FRect {
     fn from(rect: Rect) -> Self {
-	FRect::new(
-	    rect.x as f32,
-	    rect.y as f32,
-	    rect.w as f32,
-	    rect.h as f32,
-	)
+        FRect::new(rect.x as f32, rect.y as f32, rect.w as f32, rect.h as f32)
     }
 }
 
@@ -863,7 +855,10 @@ fn ll_create_texture(
     // If the pixel format is YUV 4:2:0 and planar, the width and height must
     // be multiples-of-two. See issue #334 for details.
     match pixel_format {
-        PixelFormatEnum::YV12 | PixelFormatEnum::IYUV => {
+        PixelFormatEnum::YV12
+        | PixelFormatEnum::IYUV
+        | PixelFormatEnum::NV12
+        | PixelFormatEnum::NV21 => {
             if w % 2 != 0 || h % 2 != 0 {
                 return Err(WidthMustBeMultipleOfTwoForFormat(width, pixel_format));
             }
@@ -2020,7 +2015,10 @@ impl InternalTexture {
         // See issue #334 for details.
         let TextureQuery { format, .. } = self.query();
         match format {
-            PixelFormatEnum::YV12 | PixelFormatEnum::IYUV => {
+            PixelFormatEnum::YV12
+            | PixelFormatEnum::IYUV
+            | PixelFormatEnum::NV12
+            | PixelFormatEnum::NV21 => {
                 if let Some(r) = rect {
                     if r.x() % 2 != 0 {
                         return Err(XMustBeMultipleOfTwoForFormat(r.x(), format));
